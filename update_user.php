@@ -35,5 +35,5 @@ if ($promo_id != "") {
 }
 
 // Redirect back to the edit user page
-header("Location: edit_user.php?id=" . $user_id);
+header("Location: userlist.php ");
 ?>
