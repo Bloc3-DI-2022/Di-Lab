@@ -11,8 +11,7 @@ h2 {
 .container-chat {
     display: flex;
     flex-direction: row;
-    height: auto;
-    
+  
 }
 
 .sidebar {
