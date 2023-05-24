@@ -1,0 +1,144 @@
+body {
+    background-color: whitesmoke;
+}
+
+
+/*  Navigation */
+#bloc-nav {
+    margin-top: 30px;
+    border-bottom: 1px solid #333;
+    padding-bottom : 30px;
+}
+.barre-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    font-family: "Open sans", sans-serif;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 15px;
+   
+}
+.barre-nav-accueil {
+    justify-content: flex-start;
+}
+.barre-nav-menu {
+    justify-content: flex-end;
+}
+.site-navigation {
+    display: flex;
+    flex-direction: row;
+}
+.site-navigation li {
+    margin-left: 10px;
+    display: block;
+}
+.site-navigation li a {
+    text-decoration: none;
+    color: #333;
+}
+.site-navigation li a:hover {
+    background: transparent;
+    text-decoration: underline;
+    
+}
+.renvoi-accueil {
+    text-decoration: none;
+    color: #333;
+    font-size: 20px;
+}
+.renvoi-accueil li a:hover {
+    background: transparent;
+    text-decoration: underline;
+
+}
+
+.bouton-logout {
+    background-color: whitesmoke;
+    font-family: "Open sans", sans-serif;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 15px;
+    border: 0px;
+    padding: 0;
+}
+
+.bouton-logout:hover {
+    text-decoration: underline;
+}
+
+.recherche-inputs {
+   display: flex;
+   justify-content: space-around;
+   margin-bottom: 20px;
+}
+.recherche-table {
+    display: flex;
+    flex-direction: column;
+}
+.recherche-table tbody tr td  {
+    text-align: left;
+}
+.recherche-table thead tr th {
+    text-align: left;
+}
+
+/*-- pour scroll actif --*/
+
+  
+  .scroll-champs {
+    background-color: red;
+  }
+  .table-promos thead th {
+    position: sticky;
+    top: 0;
+  }
+  .table-promos tfoot td {
+    position: sticky;
+    bottom: 0;
+  }
+  .table-promos {
+    width: -webkit-fill-available;
+    table-layout: fixed;
+    width: 100%;
+    border: 1px solid black;
+  }
+  thead th:nth-child(1) {
+    width: 20%;
+  }
+  thead th:nth-child(2) {
+    width: 20%;
+  }
+  thead th:nth-child(3) {
+    width: 20%;
+  }
+  thead th:nth-child(4) {
+    width: 20%;
+  }
+  thead th:nth-child(5) {
+    width: 20%;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: ghostwhite;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #e495e4;
+  }
+tbody {
+    overflow-y: scroll;
+    width: 90em;
+    height: 10em;
+    display: inline-block;
+}
+
+  thead {
+    height: 50px;
+  }
+
+  tbody tr td {
+    width: 20em;
+  }

@@ -1,0 +1,41 @@
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 40px;
+}
+
+th {
+    padding: 15px;
+    border: 1px solid black;
+    background-color: #f2f2f2;
+}
+
+td {
+    padding: 15px;
+    border: 1px solid black;
+}
+
+.edit-bouton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+.bouton-edit {
+    text-align: center;
+    vertical-align: middle;
+}
+.is_admin {
+    text-align: center;
+    vertical-align: middle;
+}

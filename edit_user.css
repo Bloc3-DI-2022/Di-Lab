@@ -1,0 +1,27 @@
+.is_admin {
+    text-align: center;
+    vertical-align: middle;
+}
+body {
+    font-family: Arial, sans-serif;
+}
+
+form {
+    width: 300px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+}

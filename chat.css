@@ -1,0 +1,136 @@
+
+body {
+    font-family: Arial, sans-serif;
+  
+}
+
+h2 {
+    text-align: center;
+}
+
+.container-chat {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.sidebar {
+    background-color: #f2f2f2;
+    width: 250px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.conversation {
+    margin-bottom: 10px;
+}
+
+.conversation a {
+    display: block;
+    padding: 10px;
+    background-color: #fff;
+    text-decoration: none;
+    color: #000;
+}
+
+.conversation a:hover {
+    background-color: #ddd;
+}
+
+.message-container {
+    flex: 1;
+    padding: 20px;
+}
+
+.message-container h2 {
+    margin-bottom: 20px;
+}
+
+.message-list {
+    margin-bottom: 20px;
+    max-height: calc(100vh - 40px - 20px - 40px); /* Subtract the height of the header, padding, and form */
+    overflow-y: auto;
+}
+
+.message {
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.message.sent {
+    margin-right: 10px;
+    align-self: flex-end;
+    background-color: lightgreen;
+    border-radius: 15px;
+}
+
+.message.received {
+    margin-left: 10px;
+    align-self: flex-start;
+    background-color: lightskyblue;
+    border-radius: 15px;
+}
+
+.message-content {
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.message img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.message small {
+    margin-top: 5px;
+    color: #777;
+    font-size: 12px;
+}
+
+.bottom-container {
+    flex-shrink: 0;
+    background-color: #f2f2f2;
+    padding: 20px;
+    position: sticky;
+    bottom: 0;
+}
+
+.form-chat {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+textarea {
+    width: 100%;
+    resize: vertical;
+    padding: 5px;
+}
+
+
+
+.button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
