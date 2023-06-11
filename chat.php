@@ -31,6 +31,28 @@ if (isset($_GET['conversation_id'])) {
     $messages = getMessages($_GET['conversation_id']);
 }
 
+
+
+function getConversationName($conversation_id) {
+    global $conn;
+    $sql = "SELECT name FROM conversation WHERE id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, "i", $conversation_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $row = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+        return isset($row['name']) ? $row['name'] : "";
+    } else {
+        // Handle the case when statement preparation fails
+        // For example, display an error message or redirect to an error page
+        echo "Error preparing statement: " . mysqli_error($conn);
+        return "";
+    }
+}
+
+
 function getMessages($conversation_id) {
     global $conn;
     $sql = "SELECT m.*, u.first_name, u.last_name FROM message AS m
@@ -134,7 +156,7 @@ include("fonction.php");
             <div class="conversation">
                 <a href="?conversation_id=<?php echo $conversation['id_conversation']; ?>">
                     <div class="conversation-info">
-                        <div class="conversation-name">Conversation <?php echo $conversation['id_conversation']; ?></div>
+                        <div class="conversation-name"><?php echo getConversationName($conversation['id_conversation']); ?></div>
                         <div class="last-message"><?php echo $lastMessage; ?></div>
                         <div class="last-sender"><?php echo $lastSender; ?></div>
                         <div class="last-datetime"><?php echo $lastDateTime; ?></div>
@@ -144,7 +166,7 @@ include("fonction.php");
         <?php endforeach; ?>
     </div>
     <div class="message-container">
-        <h2>Selected Conversation</h2>
+        <h2><?php echo getConversationName($_GET['conversation_id']); ?></h2>
         <div class="message-list">
             <?php foreach ($messages as $message): ?>
                 <?php
