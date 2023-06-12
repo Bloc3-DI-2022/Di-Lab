@@ -76,7 +76,7 @@ mysqli_close($conn);
       <div class="collapse navbar-collapse navbar-1">
         <ul class="site-navigation nav">
           <li><a href="#">Promos</a></li>
-          <li><a href="#">Groupe</a></li>
+          <li><a href="group.php">Groupe</a></li>
           <li><a href="#">Projects</a></li>
           <li><a href="chat.php">Chat</a></li>
           <li><a href="userlist.php">Utilisateur</a></li>
@@ -91,8 +91,6 @@ mysqli_close($conn);
       </div>
     </nav>
   </div>
-
-  <!-- ... Existing code ... -->
 
   <div class="container">
     <h1>Edit Promo</h1>
