@@ -41,3 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     mysqli_stmt_close($stmt_group_user);
 
     // Redirect back to the edit group page
+
+header("location: promo.php?id=$group_id");
+exit;
+}
+
+mysqli_close($conn);
+?>

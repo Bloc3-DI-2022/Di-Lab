@@ -132,8 +132,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 include("fonction.php");
 
 ?>
-<!DOCTYPE html>
 <html>
+
 <head>
     <title>Chat Room CESI-DI 2022</title>
     <meta charset="utf-8">

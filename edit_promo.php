@@ -56,43 +56,33 @@ if ($result_all_users) {
   echo "SQL Error: " . mysqli_error($conn);
 }
 
-mysqli_close($conn);
-?>
+// Fetch promotions with pilot names from the database
+$sql_promotions = "SELECT promo.id, promo.name, promo.start_date, promo.end_date, user.first_name, user.last_name, promo.pilote_user_id
+                   FROM promo
+                   INNER JOIN user ON promo.pilote_user_id = user.id";
+$result_promotions = mysqli_query($conn, $sql_promotions);
+$promotions = mysqli_fetch_all($result_promotions, MYSQLI_ASSOC);
+mysqli_free_result($result_promotions);
 
-<!DOCTYPE html>
-<html>
+mysqli_close($conn);
+include("fonction.php");
+?><html>
 <title>Chat DiLAB</title>
 <meta charset="utf-8">
-<link rel="stylesheet" media="screen" href="edit_promo.css" />
+<link rel="stylesheet" media="screen" href="" />
 
 <body>
-  <!-- Bloc Navigation -->
-  <div class="container" id="bloc-nav">
-    <nav class="barre-nav">
-      <div class="navbar-header">
-        <a class="renvoi-accueil" href="accueil.php">Di-Lab</a>
-      </div>
+  <!-- Gestion screen -->
+<div class="flex flex-col h-screen justify-between">
+<!-- Bloc Navigation -->
+<?php get_include("header.php"); ?> 
 
-      <div class="collapse navbar-collapse navbar-1">
-        <ul class="site-navigation nav">
-          <li><a href="#">Promos</a></li>
-          <li><a href="group.php">Groupe</a></li>
-          <li><a href="#">Projects</a></li>
-          <li><a href="chat.php">Chat</a></li>
-          <li><a href="userlist.php">Utilisateur</a></li>
-          <li>
-            <a href="#">
-              <form method="post" enctype="multipart/form-data" action="logout.php">
-                <button type="submit" class="bouton-logout" name="logout">Se déconnecter</button>
-              </form>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
+  
+  
+  
+  <div class="container flex flex-col md:container md:mx-auto">
 
-  <div class="container">
+  <div class="md:div md:mx-auto">
     <h1>Edit Promo</h1>
 
     <!-- Display promo details form -->
@@ -123,64 +113,250 @@ mysqli_close($conn);
         <a href="edit_promo.php?id=<?php echo $promo_id; ?>" class="discard-link">Discard</a>
       </div>
     </form>
+    </div>
+ 
 
-    <!-- Display list of users associated with the promo -->
-    <h2>Users Associated with the Promo</h2>
-    <table>
+
+   <div class="tableaux flex md:div md:mx-auto grow">
+ <div class="tableaux-sans-liste-user ">
+    <div class="flex flex-col mt-8">
+    <div class="py-1 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
+<!-- Début table -->
+<h1>Utilisateurs de la promo</h1>
+      <table class="min-w-full">
+<!-- Nom colonnes -->
       <thead>
         <tr>
-          <th>User ID</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Actions</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        ID utilisateur</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Prénom</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+       Nom</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+       Supprimer</th>
+       
         </tr>
       </thead>
-      <tbody>
+
+<!-- lignes colonnes -->
+      <tbody class="bg-white">
         <?php foreach ($users as $user) : ?>
-          <tr>
-            <td><?php echo $user['id']; ?></td>
-            <td><?php echo $user['first_name']; ?></td>
-            <td><?php echo $user['last_name']; ?></td>
-            <td>
-              <form method="post" action="remove_user_from_promo.php">
+        <tr>
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+         
+
+          <div class="ml-1">
+          <div class="text-sm font-medium leading-5 text-gray-900">
+          <?php echo $user['id']; ?>
+          </div>
+          </div>
+        </div>
+        </td>
+
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+        <div class="text-sm leading-5 text-gray-500">
+          <?php echo $user['first_name']; ?>
+        </div>
+        </td>
+
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+        <span
+        class="text-sm leading-5 text-gray-500">
+        <?php echo $user['last_name']; ?></span>
+        </td>
+
+        
+        <td
+        class="px-6 py-1 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+        <form method="post" action="remove_user_from_promo.php">
                 <input type="hidden" name="promo_id" value="<?php echo $promo_id; ?>">
                 <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
                 <button type="submit" class="remove-user-btn">Remove</button>
               </form>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-
-    <!-- Display list of users not associated with the promo -->
-    <h2>Users Not Associated with the Promo</h2>
-    <div class="recherche-inputs">
-      <input type="text" id="search-user" placeholder="Search User" />
-    </div>
-    <table id="all-users-table">
-      <thead>
-        <tr>
-          <th>User ID</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Add</th>
+        </td>
         </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($all_users as $user) : ?>
-          <tr>
-            <td><?php echo $user['id']; ?></td>
-            <td><?php echo $user['first_name']; ?></td>
-            <td><?php echo $user['last_name']; ?></td>
-            <td><button class="add-user-btn" data-user-id="<?php echo $user['id']; ?>"><img src="arrow-icon.png" alt="Add User" /></button></td>
-          </tr>
+
         <?php endforeach; ?>
+
       </tbody>
     </table>
-
+    <!-- Fin tableau -->
+    </div></div>
   </div>
 
+    
+   
+
+    
+    <div class="flex flex-col mt-8">
+    <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
+<!-- Début table -->
+<h1>Choix de la promo</h1>
+      <table class="min-w-full">
+<!-- Nom colonnes -->
+      <thead>
+        <tr>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Promotion</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Date de début</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Date de fin</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Pilote</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Modifier</th>
+        </tr>
+      </thead>
+
+<!-- lignes colonnes -->
+      <tbody class="bg-white">
+        <?php foreach ($promotions as $promotion) : ?>
+        <tr>
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+         
+
+          <div class="ml-4">
+          <div class="text-sm font-medium leading-5 text-gray-900">
+          <?php echo $promotion['name']; ?>
+          </div>
+          </div>
+        </div>
+        </td>
+
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+        <div class="text-sm leading-5 text-gray-500">
+          <?php echo $promotion['start_date']; ?>
+        </div>
+        </td>
+
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+        <span
+        class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+        <?php echo $promotion['end_date']; ?></span>
+        </td>
+
+        <td data-pilot-id="<?php echo $promotion['pilote_user_id']; ?>"
+        class="px-6 py-1 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+        <?php echo $promotion['first_name'] . ' ' . $promotion['last_name']; ?>
+        </td>
+        <td
+        class="px-6 py-1 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+        <a href="edit_promo.php?id=<?php echo $promotion['id']; ?>"> <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor"> 
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg></a>
+        </td>
+        </tr>
+
+        <?php endforeach; ?>
+
+      </tbody>
+    </table>
+    <!-- Fin tableau -->
+    <!-- Bouton création promo -->
+   
+
+      </div>
+    </div>
+</div>
+</div>
+
+  <div class="flex flex-col mt-8">
+    <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
+<!-- Début table -->
+<h1>Liste des utilisateurs</h1> 
+<div class="recherche-inputs">
+      <input type="text" id="search-user" placeholder="Search User" />
+    </div>
+      <table class="min-w-full" id="all-users-table">
+<!-- Nom colonnes -->
+      <thead>
+        <tr>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        ID utilisateur</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Prénom</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Nom</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Ajouter à la promo</th>
+        
+        </tr>
+      </thead>
+
+<!-- lignes colonnes -->
+      <tbody class="bg-white">
+      <?php foreach ($all_users as $user) : ?>
+        <tr>
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+         
+
+          <div class="ml-4">
+          <div class="text-sm font-medium leading-5 text-gray-900">
+          <?php echo $user['id']; ?>
+          </div>
+          </div>
+        </div>
+        </td>
+
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+        <div class="text-sm leading-5 text-gray-500">
+          <?php echo $user['first_name'] ?>
+        </div>
+        </td>
+
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+        <span
+        class="text-sm leading-5 text-gray-500">
+        <?php echo $user['last_name']; ?></span>
+        </td>
+
+        
+        <td
+        class="px-6 py-1 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+        <button class="add-user-btn" data-user-id="<?php echo $user['id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="blue" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg></button>
+        </td>
+        </tr>
+
+        <?php endforeach; ?>
+
+      </tbody>
+    </table>
+    <!-- Fin tableau -->
+
+    </div>
+    
+
+  </div>
+    </div>
+    </div>
+  
+      </div>
+  <!-- Ajout footer -->
+  <?php include("footer.php"); ?>
+
+  </div>
   <script src="TableFilter.min.js" defer></script>
   <script src="TableFilter.js" defer></script>
   <script>
