@@ -1,5 +1,5 @@
 <?php
-require 'database.php';
+require 'db_connection.php';
 // Get user id from URL
 $user_id = $_GET['id'];
 
@@ -40,8 +40,7 @@ $userPromos = $result->fetch_all(MYSQLI_ASSOC);
         <input type='text' name='last_name' value='<?= $user['last_name'] ?>'/><br>
         <label for='email'>Email:</label><br>
         <input type='email' name='email' value='<?= $user['email'] ?>'/><br>
-        <label for='password'>Password:</label><br>
-        <input type='password' name='password' value='<?= $user['password'] ?>'/><br>
+      
         <label for='user_type_id'>User Type:</label><br>
         <select name='user_type_id'>
             <?php foreach ($userTypes as $userType): ?>

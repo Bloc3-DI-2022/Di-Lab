@@ -156,62 +156,7 @@ include("fonction.php");
 <div class="container-chat container md:container md:mx-auto flex">
 
 
-
-    <div class="sidebar">
-        <h2>Conversations</h2>
-        <?php foreach ($conversations as $conversation): ?>
-            <?php
-                $lastMessage = getLastMessage($conversation['id_conversation']);
-                $lastSender = getLastSender($conversation['id_conversation']);
-                $lastDateTime = getLastDateTime($conversation['id_conversation']);
-            ?>
-            <div class="conversation">
-                <a href="?conversation_id=<?php echo $conversation['id_conversation']; ?>">
-                    <div class="conversation-info">
-                        <div class="conversation-name"><?php echo getConversationName($conversation['id_conversation']); ?></div>
-                        <div class="last-message"><?php echo $lastMessage; ?></div>
-                        <div class="last-sender"><?php echo $lastSender; ?></div>
-                        <div class="last-datetime"><?php echo $lastDateTime; ?></div>
-                    </div>
-                </a>
-            </div>
-        <?php endforeach; ?>
-    </div>
-
-
-    <div class="message-container">
-        <h2><?php echo getConversationName($_GET['conversation_id']); ?></h2>
-        <div class="message-list">
-            <?php foreach ($messages as $message): ?>
-                <?php
-                $class = ($message['id_user'] == $_SESSION['id']) ? "sent" : "received";
-                ?>
-                <div class="message <?php echo $class; ?>">
-                    <span class="sender"><?php echo $message['first_name'] . ' ' . $message['last_name']; ?>:</span>
-                    <br>
-                    <?php echo $message['message']; ?>
-                    <br>
-                    <span class="timestamp"><?php echo date('Y-m-d H:i', strtotime($message['date'])); ?></span>
-                    <?php if (!empty($message['filepath'])): ?>
-                        <img class="image" src="uploads/<?php echo $message['filepath']; ?>" alt="Image">
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-
-    <div class="bottom-container">
-        <form method="post" class="form-chat" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'] . '?conversation_id=' . $_GET['conversation_id']; ?>">
-            <label for="message">Message:</label>
-            <textarea name="message" required rows="3" cols="50"></textarea>
-            <label for="image">Image or GIF:</label>
-            <input type="file" name="image">
-            <button type="submit" class="button">Send</button>
-        </form>
-        <form method="post" class="form-chat"  enctype="multipart/form-data" action="logout.php">
-        <button type="submit" class="button" name="logout">Log Out</button>
-        </form> 
-    </div>
+    
 
     
 
@@ -253,7 +198,7 @@ include("fonction.php");
         </div>
         <!-- end search compt -->
         <!-- user list -->
-        <div class="sidebar">
+        <div class="sidebar w-full">
         <h2>Conversations</h2>
 
 
@@ -264,7 +209,7 @@ include("fonction.php");
                 $lastDateTime = getLastDateTime($conversation['id_conversation']);
             ?>
             <div class="flex flex-row py-4 px-2 justify-center items-center border-b-2 conversation">
-                <a href="?conversation_id=<?php echo $conversation['id_conversation']; ?>">
+                <a class="w-full" href="?conversation_id=<?php echo $conversation['id_conversation']; ?>">
                     <div class="conversation-info w-full">
                         <div class="conversation-name"><?php echo getConversationName($conversation['id_conversation']); ?></div>
                         <div class="text-gray-500"><?php echo $lastMessage; ?></div>
@@ -288,15 +233,23 @@ include("fonction.php");
 
 
       <!-- end chat list -->
-      <div class="message-container">
-        <h2><?php echo getConversationName($_GET['conversation_id']); ?></h2>
-        <div class="message-list">
-            <?php foreach ($messages as $message): ?>
+    
+
+
+
+      <!-- message -->
+      <div class="w-full px-5 flex flex-col ">
+
+      <div class="flex flex-col ">
+          <div class="flex flex-col justify-evenly   mb-4">
+          <?php foreach ($messages as $message): ?>
                 <?php
                 $class = ($message['id_user'] == $_SESSION['id']) ? "sent" : "received";
                 ?>
-                <div class="message <?php echo $class; ?>">
-                    <span class="sender"><?php echo $message['first_name'] . ' ' . $message['last_name']; ?>:</span>
+            <div
+              class="h-26 mb-4 mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white <?php echo $class; ?>"> 
+            >
+            <span class="sender"><?php echo $message['first_name'] . ' ' . $message['last_name']; ?>:</span>
                     <br>
                     <?php echo $message['message']; ?>
                     <br>
@@ -304,107 +257,31 @@ include("fonction.php");
                     <?php if (!empty($message['filepath'])): ?>
                         <img class="image" src="uploads/<?php echo $message['filepath']; ?>" alt="Image">
                     <?php endif; ?>
-                </div>
+            </div>
             <?php endforeach; ?>
-        </div>
-    </div>
-      
-      <!-- message -->
-      <div class="w-full px-5 flex flex-col justify-between">
-        <div class="flex flex-col mt-5">
-          <div class="flex justify-end mb-4">
-            <div
-              class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white"
-            >
-              Welcome to group everyone !
-            </div>
-            <img
-              src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-              class="object-cover h-8 w-8 rounded-full"
-              alt=""
-            />
           </div>
-          <div class="flex justify-start mb-4">
-            <img
-              src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-              class="object-cover h-8 w-8 rounded-full"
-              alt=""
-            />
-            <div
-              class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white"
-            >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-              at praesentium, aut ullam delectus odio error sit rem. Architecto
-              nulla doloribus laborum illo rem enim dolor odio saepe,
-              consequatur quas?
-            </div>
-          </div>
-          <div class="flex justify-end mb-4">
-            <div>
-              <div
-                class="mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white"
-              >
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Magnam, repudiandae.
-              </div>
 
-              <div
-                class="mt-4 mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white"
-              >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Debitis, reiciendis!
-              </div>
-            </div>
-            <img
-              src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-              class="object-cover h-8 w-8 rounded-full"
-              alt=""
-            />
-          </div>
-          <div class="flex justify-start mb-4">
-            <img
-              src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
-              class="object-cover h-8 w-8 rounded-full"
-              alt=""
-            />
-            <div
-              class="ml-2 py-3 px-4 bg-gray-400 rounded-br-3xl rounded-tr-3xl rounded-tl-xl text-white"
-            >
-              happy holiday guys!
-            </div>
-          </div>
+      </div>
+
+      <form method="post" class="form-chat" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'] . '?conversation_id=' . $_GET['conversation_id']; ?>">
+            <label for="message">Message:</label>
+            <textarea name="message" required rows="3" cols="50"></textarea>
+                        
+            <input type="file" name="image">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Send</button>
+        
+         
+    </div>
+
+
         </div>
-        <div class="py-5">
-          <input
-            class="w-full bg-gray-300 py-5 px-3 rounded-xl"
-            type="text"
-            placeholder="type your message here..."
-          />
-        </div>
+       
       </div>
       <!-- end message -->
-
-
-      <div class="w-2/5 border-l-2 px-5">
-        <div class="flex flex-col">
-          <div class="font-semibold text-xl py-4">Mern Stack Group</div>
-          <img
-            src="https://source.unsplash.com/L2cxSuKWbpo/600x600"
-            class="object-cover rounded-xl h-64"
-            alt=""
-          />
-          <div class="font-semibold py-4">Created 22 Sep 2021</div>
-          <div class="font-light">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt,
-            perspiciatis!
-          </div>
-          </div>
-        </div>
+    
       </div>
 
-      
-    </div>
-</div>
+   
 
 
 
