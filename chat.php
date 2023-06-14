@@ -153,7 +153,7 @@ include("fonction.php");
 
 
 
-<div class="container-chat container md:container md:mx-auto flex">
+<div class="container-chat container md:container md:mx-auto flex h-4/5">
 
 
     
@@ -164,7 +164,7 @@ include("fonction.php");
 <div class="container mx-auto shadow-lg rounded-lg">
         <!-- headaer -->
     <div class="px-5 py-5 flex justify-between items-center bg-white border-b-2">
-      <div class="font-semibold text-2xl">DiLab Chat</div>
+      <div class="font-semibold text-3xl">Chat</div>
       <div class="w-1/2">
         <input
           type="text"
@@ -174,31 +174,28 @@ include("fonction.php");
           class="rounded-2xl bg-gray-100 py-3 px-5 w-full"
         />
       </div>
-      <div
-        class="h-12 w-12 p-2 bg-yellow-500 rounded-full text-white font-semibold flex items-center justify-center"
-      >
-        DL
-      </div>
+   
     </div>
     <!-- end header -->
 
 
 
     <!-- Chatting -->
-    <div class="flex flex-row justify-between bg-white">
+    <div class="flex flex-row justify-between bg-white h-5/6">
       <!-- chat list -->
-      <div class="flex flex-col w-2/5 border-r-2 overflow-y-auto">
+      <div class="flex flex-col w-1/4">
+      <div class="flex flex-col  border-r-2 overflow-y-auto overflow-x-hidden h-4/5">
         <!-- search compt -->
         <div class="border-b-2 py-4 px-2">
           <input
             type="text"
             placeholder="Rechercher dans les conversations"
-            class="py-2 px-2 border-2 border-gray-200 rounded-2xl w-full"
+            class="py-2 px-2 border-2 border-gray-200 rounded-2xl w-screen"
           />
         </div>
         <!-- end search compt -->
         <!-- user list -->
-        <div class="sidebar w-full">
+        <div class="sidebar w-full overflow-auto max-h-fit">
         <h2>Conversations</h2>
 
 
@@ -231,16 +228,24 @@ include("fonction.php");
         <!-- end user list -->
       </div>
 
-
+<div class="create-promo-button flex justify-center md:div md:mx-auto flex pt-3 pb-3">
+      <form method="post" action="create_promo.php" class="flex  justify-center justify-items-center md:form md:mx-auto flex">
+        <p class="mr-4">Créer un chat</p>
+        <button type="submit" class="create-promo-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+</button> 
+      </form>
+    </div>
       <!-- end chat list -->
-    
+      </div>
 
 
 
       <!-- message -->
       <div class="w-full px-5 flex flex-col ">
 
-      <div class="flex flex-col ">
+      <div class="flex flex-col h-5/6 overflow-y-auto">
           <div class="flex flex-col justify-evenly   mb-4">
           <?php foreach ($messages as $message): ?>
                 <?php
@@ -263,14 +268,60 @@ include("fonction.php");
 
       </div>
 
-      <form method="post" class="form-chat" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'] . '?conversation_id=' . $_GET['conversation_id']; ?>">
-            <label for="message">Message:</label>
-            <textarea name="message" required rows="3" cols="50"></textarea>
-                        
-            <input type="file" name="image">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Send</button>
-        
-         
+
+
+
+
+      <!-- <button>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                </svg>
+              </button>
+
+              <input type="text" placeholder="Message"
+                class="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
+                name="message" required />
+              <button>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                </svg>
+              </button>
+              <button type="submit">
+                <svg class="w-5 h-5 text-gray-500 origin-center transform rotate-90" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                </svg>
+              </button> -->
+
+
+
+<div class="">
+
+
+      <form method="post" class="mt-2 form-chat flex items-center justify-between  border-t border-gray-300 " enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF'] . '?conversation_id=' . $_GET['conversation_id']; ?>">
+           
+            <textarea class="block w-full py-2 pl-4 mx-3 bg-gray-100 rounded-lg outline-none focus:text-gray-700" name="message" required rows="3" cols="50"></textarea>
+          
+                 <div class="flex flex-col flex items-center justify-between">     
+            <input type="file" class="block w-full text-sm text-gray-500 
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-md file:border-0
+      file:text-sm file:font-semibold
+      file:bg-blue-500 file:text-white
+      hover:file:bg-blue-600"  name="image">
+            <button type="submit" class=" w-12 hover:bg-gray-700 text-white font-bold py-2 mt-2 px-4 border border-gray-700 rounded"> <svg class="w-5 h-5 text-gray-500 origin-center transform rotate-90" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                </svg></button>
+                </div>  
+      </form>
+</div>        
     </div>
 
 
@@ -289,3 +340,5 @@ include("fonction.php");
 </div>
 </body>
 </html>
+
+

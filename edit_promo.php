@@ -67,57 +67,87 @@ mysqli_free_result($result_promotions);
 mysqli_close($conn);
 include("fonction.php");
 ?><html>
-<title>Chat DiLAB</title>
+<title>Edition promotion</title>
 <meta charset="utf-8">
 <link rel="stylesheet" media="screen" href="" />
 
 <body>
   <!-- Gestion screen -->
-<div class="flex flex-col h-screen justify-between">
+  <div class="flex flex-col h-full md:h-full justify-between">
 <!-- Bloc Navigation -->
 <?php get_include("header.php"); ?> 
 
   
   
   
-  <div class="container flex flex-col md:container md:mx-auto">
+  <div class="container md:container md:mx-auto flex h-4/5 ">
 
-  <div class="md:div md:mx-auto">
-    <h1>Edit Promo</h1>
+  
 
-    <!-- Display promo details form -->
-    <form method="POST" action="update_promo.php">
-      <!-- Display input fields for promo details -->
-      <input type="hidden" name="promo_id" value="<?php echo $promo_id; ?>">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" value="<?php echo $promo['name'] ?? ''; ?>" required>
+    <div class="w-full md:w-1/2 py-10 px-5 md:px-10 self-center">
+                <div class="text-center mb-10">
+                    <h1 class="font-bold text-3xl text-gray-900">Edition promotion</h1>
+                    <p>Choississez l'information à modifier</p>
+                </div>
+                <div>
+                <form method="POST" action="update_promo.php">
+                <input type="hidden" name="promo_id" value="<?php echo $promo_id; ?>">
+                
+                <div class="flex -mx-3">
+                        <div class="w-full px-3 mb-5">
+                        <label for="name" class="text-xs font-semibold px-1">Nom de la promotion</label>
+                            <div class="flex">
+                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
+                                <input type="text" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="text" id="name" name="name" value="<?php echo $promo['name'] ?? ''; ?>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex -mx-3">
+                        
+                    </div>
+                    <div class="flex -mx-3">
+                        <div class="w-1/2 px-3 mb-5">
+                        <label for="end-date" class="text-xs font-semibold px-1">Fin promotion</label>
+                            <div class="flex">
+                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
+                                <input class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="date" id="end_date" name="end_date" value="<?php echo date('Y-m-d', strtotime($promo['end_date'] ?? '')); ?>" required>
+                               </div>
+                        </div>
 
-      <label for="start_date">Start Date:</label>
-      <input type="date" id="start_date" name="start_date" value="<?php echo date('Y-m-d', strtotime($promo['start_date'] ?? '')); ?>" required>
-
-      <label for="end_date">End Date:</label>
-      <input type="date" id="end_date" name="end_date" value="<?php echo date('Y-m-d', strtotime($promo['end_date'] ?? '')); ?>" required>
-
-      <label for="pilot">Pilot:</label>
-      <select id="pilot" name="pilot" required>
+                        <div class="w-1/2 px-3 mb-5">
+                            <label for="start-date" class="text-xs font-semibold px-1">Début promotion</label>
+                            <div class="flex">
+                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
+                                <input type="date" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" type="date" id="start_date" name="start_date" value="<?php echo date('Y-m-d', strtotime($promo['start_date'] ?? '')); ?>" required>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="flex -mx-3">
+                        <div class="w-full px-3 mb-12">
+                            <label for="pilot" class="text-xs font-semibold px-1">Pilote</label>
+                            <select id="pilot" name="pilot" required>
         <?php foreach ($pilots as $pilot) : ?>
           <option value="<?php echo $pilot['id']; ?>" <?php echo ($promo['pilote_user_id'] ?? 0) == $pilot['id'] ? 'selected' : ''; ?>>
             <?php echo $pilot['first_name'] . ' ' . $pilot['last_name']; ?>
           </option>
         <?php endforeach; ?>
-      </select>
-
-      <!-- Save and Discard buttons -->
-      <div class="save-discard-buttons">
-        <button type="submit" class="save-btn">Save</button>
-        <a href="edit_promo.php?id=<?php echo $promo_id; ?>" class="discard-link">Discard</a>
+      </select><br>
+                        </div>
+                        </div>
+                        <div class="save-discard-buttons flex items-center">
+        <button type="submit" class="save-btn block w-1/3 max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Save</button>
+        <a href="edit_promo.php?id=<?php echo $promo_id; ?>" class="discard-link block w-1/3 max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Discard</a>
       </div>
-    </form>
-    </div>
- 
+                    
+                </form>
+                </div>
+            </div>
+           
+        
 
-
-   <div class="tableaux flex md:div md:mx-auto grow">
+<div class="w-full flex flex-col items-center justify-center md:w-1/2 py-10 px-5 md:px-10">
+   <div class="tableaux flex md:div md:mx-auto w-1/2 ">
  <div class="tableaux-sans-liste-user ">
     <div class="flex flex-col mt-8">
     <div class="py-1 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -156,7 +186,7 @@ include("fonction.php");
           <?php echo $user['id']; ?>
           </div>
           </div>
-        </div>
+       
         </td>
 
         <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
@@ -194,84 +224,7 @@ include("fonction.php");
    
 
     
-    <div class="flex flex-col mt-8">
-    <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-<!-- Début table -->
-<h1>Choix de la promo</h1>
-      <table class="min-w-full">
-<!-- Nom colonnes -->
-      <thead>
-        <tr>
-        <th
-        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-        Promotion</th>
-        <th
-        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-        Date de début</th>
-        <th
-        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-        Date de fin</th>
-        <th
-        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-        Pilote</th>
-        <th
-        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-        Modifier</th>
-        </tr>
-      </thead>
-
-<!-- lignes colonnes -->
-      <tbody class="bg-white">
-        <?php foreach ($promotions as $promotion) : ?>
-        <tr>
-        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
-         
-
-          <div class="ml-4">
-          <div class="text-sm font-medium leading-5 text-gray-900">
-          <?php echo $promotion['name']; ?>
-          </div>
-          </div>
-        </div>
-        </td>
-
-        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
-        <div class="text-sm leading-5 text-gray-500">
-          <?php echo $promotion['start_date']; ?>
-        </div>
-        </td>
-
-        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
-        <span
-        class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-        <?php echo $promotion['end_date']; ?></span>
-        </td>
-
-        <td data-pilot-id="<?php echo $promotion['pilote_user_id']; ?>"
-        class="px-6 py-1 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-        <?php echo $promotion['first_name'] . ' ' . $promotion['last_name']; ?>
-        </td>
-        <td
-        class="px-6 py-1 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-        <a href="edit_promo.php?id=<?php echo $promotion['id']; ?>"> <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" fill="none"
-        viewBox="0 0 24 24" stroke="currentColor"> 
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-        </svg></a>
-        </td>
-        </tr>
-
-        <?php endforeach; ?>
-
-      </tbody>
-    </table>
-    <!-- Fin tableau -->
-    <!-- Bouton création promo -->
-   
-
-      </div>
-    </div>
+    
 </div>
 </div>
 
@@ -283,7 +236,7 @@ include("fonction.php");
 <div class="recherche-inputs">
       <input type="text" id="search-user" placeholder="Search User" />
     </div>
-      <table class="min-w-full" id="all-users-table">
+      <table class="min-w-full overflow-auto" id="all-users-table">
 <!-- Nom colonnes -->
       <thead>
         <tr>
@@ -349,9 +302,9 @@ include("fonction.php");
     
 
   </div>
-    </div>
-    </div>
-  
+  </div>
+
+  </div>
       </div>
   <!-- Ajout footer -->
   <?php include("footer.php"); ?>

@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="conversation">
                     <a href="?conversation_id=<?php echo $conversation['id_conversation']; ?>">
                         <div class="conversation-info">
-                            <div class="conversation-name"><?php echo getConversationName($conversation['id_conversation']); ?></div>
+                            <div class="conversation-name"><?php echo getLastMessage($conversation['id_conversation']); ?></div>
                             <div class="last-message"><?php echo $lastMessage; ?></div>
                             <div class="last-sender"><?php echo $lastSender; ?></div>
                             <div class="last-datetime"><?php echo $lastDateTime; ?></div>

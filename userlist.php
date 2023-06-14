@@ -99,10 +99,11 @@ include("fonction.php");
       <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
 <!-- Début table -->
 <div class="flex flex-col mt-8 items-center justify-center md:div md:mx-auto pb-4">
-<h1>Liste des utilisateurs</h1> 
+<h1 class="font-semibold text-3xl mb-20">Liste des utilisateurs</h1> 
+
 
 <div class="recherche-inputs">
-      <input type="text" id="search-user" placeholder="Search User" />
+      <input type="text" id="search-user" class="w-96 -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="Recherche par Prénom ou Type utilisateur" />
     </div>
     </div>
       <table class="min-w-full" id="all-users-table">
