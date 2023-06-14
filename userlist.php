@@ -193,13 +193,13 @@ include("fonction.php");
         <td
         class="px-6 py-1 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
         <button class="add-user-btn" data-user-id="<?php echo $user['id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400" fill="none"
-        viewBox="0 0 24 24" stroke="currentColor"> 
+        viewBox="0 0 24 24" stroke="currentColor" onclick="location.href='edit_user.php?id=<?= $user['id'] ?>'"> 
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg></button>
         </td>
         </tr>
-
+        
         <?php endforeach; ?>
 
       </tbody>
@@ -235,4 +235,3 @@ include("fonction.php");
     });</script>
     </body>
     </html>
-

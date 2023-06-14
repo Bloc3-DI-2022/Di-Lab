@@ -1,4 +1,4 @@
-
+//*
 body {
     font-family: Arial, sans-serif;
   
@@ -49,9 +49,8 @@ h2 {
 .message-list {
     margin-bottom: 20px;
     max-height: calc(100vh - 40px - 20px - 40px); /* Subtract the height of the header, padding, and form */
-    overflow-y: auto;
-}
-
+    /* overflow-y: auto; */
+} /* 
 .message {
     background-color: #f2f2f2;
     padding: 10px;
@@ -133,4 +132,18 @@ textarea {
 
 .button:hover {
     background-color: #45a049;
+}
+*/
+.message.sent {
+    margin-right: 10px;
+    align-self: flex-end;
+    background-color: lightgreen;
+    border-radius: 15px;
+}
+
+.message.received {
+    margin-left: 10px;
+    align-self: flex-start;
+    background-color: lightskyblue;
+    border-radius: 15px;
 }
