@@ -25,7 +25,7 @@
         <a href="accueil.php" class="p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600">Accueil</a>
         <a href="promo.php" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">Promos</a>
         <a href="group.php" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">Groupe</a>
-        <a href="#" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">Projets</a>
+        <a href="project.php" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">Projets</a>
         <a href="chat.php?conversation_id=0" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">Chat</a>
         <a href="userlist.php" class="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-transparent rounded hover:bg-indigo-100 hover:text-indigo-700 transition-colors duration-300">Utilisateur</a>
         <form action="logout.php" method="post">

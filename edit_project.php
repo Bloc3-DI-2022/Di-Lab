@@ -13,29 +13,29 @@ if (!$conn) {
     die('Connection failed: ' . mysqli_connect_error());
 }
 
-$group_id = $_GET['id'] ?? 0;
+$project_id = $_GET['id'] ?? 0;
 
-// Retrieve the group details from the database based on the group ID
-$sql_group = "SELECT * FROM `group` WHERE id = ?";
-$stmt_group = mysqli_prepare($conn, $sql_group);
-mysqli_stmt_bind_param($stmt_group, "i", $group_id);
-mysqli_stmt_execute($stmt_group);
-$result_group = mysqli_stmt_get_result($stmt_group);
+// Retrieve the project details from the database based on the project ID
+$sql_project = "SELECT * FROM project WHERE id = ?";
+$stmt_project = mysqli_prepare($conn, $sql_project);
+mysqli_stmt_bind_param($stmt_project, "i", $project_id);
+mysqli_stmt_execute($stmt_project);
+$result_project = mysqli_stmt_get_result($stmt_project);
 
-if ($result_group && mysqli_num_rows($result_group) > 0) {
-    $group = mysqli_fetch_assoc($result_group);
+if ($result_project && mysqli_num_rows($result_project) > 0) {
+    $project = mysqli_fetch_assoc($result_project);
 } else {
-    // Handle the case when the group is not found
+    // Handle the case when the project is not found
     // For example, display an error message or redirect to an error page
 }
 
-// Retrieve the list of users associated with the group from the database
+// Retrieve the list of users associated with the project from the database
 $sql_users = "SELECT user.id, user.first_name, user.last_name
-              FROM user
-              INNER JOIN group_user ON user.id = group_user.id_user
-              WHERE group_user.id_group = ?";
+              FROM project_user
+              INNER JOIN user ON user.id = project_user.user_id
+              WHERE project_user.project_id = ?";
 $stmt_users = mysqli_prepare($conn, $sql_users);
-mysqli_stmt_bind_param($stmt_users, "i", $group_id);
+mysqli_stmt_bind_param($stmt_users, "i", $project_id);
 mysqli_stmt_execute($stmt_users);
 $result_users = mysqli_stmt_get_result($stmt_users);
 
@@ -47,12 +47,9 @@ if ($result_users) {
     echo "SQL Error: " . mysqli_error($conn);
 }
 
-// Retrieve the list of users not associated with the group from the database
-$sql_all_users = "SELECT id, first_name, last_name FROM user WHERE id NOT IN (SELECT id_user FROM group_user WHERE id_group = ?)";
-$stmt_all_users = mysqli_prepare($conn, $sql_all_users);
-mysqli_stmt_bind_param($stmt_all_users, "i", $group_id);
-mysqli_stmt_execute($stmt_all_users);
-$result_all_users = mysqli_stmt_get_result($stmt_all_users);
+// Retrieve the list of all users from the database
+$sql_all_users = "SELECT id, first_name, last_name FROM user";
+$result_all_users = mysqli_query($conn, $sql_all_users);
 
 if ($result_all_users) {
     $all_users = mysqli_fetch_all($result_all_users, MYSQLI_ASSOC);
@@ -62,30 +59,10 @@ if ($result_all_users) {
     echo "SQL Error: " . mysqli_error($conn);
 }
 
-// Retrieve the list of projects associated with the group from the database
-$sql_projects = "SELECT * FROM project WHERE group_id = ?";
-$stmt_projects = mysqli_prepare($conn, $sql_projects);
-mysqli_stmt_bind_param($stmt_projects, "i", $group_id);
-mysqli_stmt_execute($stmt_projects);
-$result_projects = mysqli_stmt_get_result($stmt_projects);
-
-if ($result_projects) {
-    $projects = mysqli_fetch_all($result_projects, MYSQLI_ASSOC);
-    mysqli_free_result($result_projects);
-} else {
-    // Handle the SQL error
-    echo "SQL Error: " . mysqli_error($conn);
-}
-
-// Check if a conversation already exists for the group
-$sql_check_conversation = "SELECT id FROM conversation WHERE id_group = ? AND is_group_conversation = 1 AND type = 'group'";    
-$stmt_check_conversation = mysqli_prepare($conn, $sql_check_conversation);
-mysqli_stmt_bind_param($stmt_check_conversation, "i", $group_id);
-mysqli_stmt_execute($stmt_check_conversation);
-$result_check_conversation = mysqli_stmt_get_result($stmt_check_conversation);
-
-$conversation_exists = ($result_check_conversation && mysqli_num_rows($result_check_conversation) > 0);
-$conversation_button_text = $conversation_exists ? "Open Conversation" : "Create Conversation";
+// Filter out the users who are already associated with the project
+$not_associated_users = array_filter($all_users, function($user) use ($users) {
+    return !in_array($user, $users);
+});
 
 mysqli_close($conn);
 ?>
@@ -93,33 +70,37 @@ mysqli_close($conn);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Edit Group</title>
+    <title>Edit Project</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" media="screen" href="edit_group.css">
+    <link rel="stylesheet" media="screen" href="edit_project.css">
 </head>
 <body>
     <div class="nav">
         <?php include("header.php"); ?>
     </div>
     <div class="container">
-        <h1>Edit Group</h1>
+        <h1>Edit Project</h1>
 
-        <!-- Display group details form -->
-        <form method="POST" action="update_group.php">
-            <!-- Display input fields for group details -->
-            <input type="hidden" name="group_id" value="<?php echo $group_id; ?>">
+        <!-- Display project details form -->
+        <form method="POST" action="update_project.php">
+            <!-- Display input fields for project details -->
+            <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" value="<?php echo $group['name'] ?? ''; ?>" required>
+            <input type="text" id="name" name="name" value="<?php echo $project['name'] ?? ''; ?>" required>
+            <label for="share-with-pilot">Share with Pilot:</label>
+            <input type="checkbox" id="share-with-pilot" name="share_with_pilot" value="1" <?php echo ($project['share_with_pilot'] ?? '') ? 'checked' : ''; ?>>
+            <label for="share-with-intervenant">Share with Intervenant:</label>
+            <input type="checkbox" id="share-with-intervenant" name="share_with_intervenant" value="1" <?php echo ($project['share_with_intervenant'] ?? '') ? 'checked' : ''; ?>>
 
             <!-- Save and Discard buttons -->
             <div class="save-discard-buttons">
                 <button type="submit" class="save-btn">Save</button>
-                <a href="edit_group.php?id=<?php echo $group_id; ?>" class="discard-link">Discard</a>
+                <a href="edit_project.php?id=<?php echo $project_id; ?>" class="discard-link">Discard</a>
             </div>
         </form>
 
-        <!-- Display list of users associated with the group -->
-        <h2>Users Associated with the Group</h2>
+        <!-- Display list of users associated with the project -->
+        <h2>Users Associated with the Project</h2>
         <?php if ($users) : ?>
             <table>
                 <thead>
@@ -137,10 +118,10 @@ mysqli_close($conn);
                             <td><?php echo $user['first_name']; ?></td>
                             <td><?php echo $user['last_name']; ?></td>
                             <td>
-                                <form method="post" action="remove_user_from_group.php">
-                                    <input type="hidden" name="group_id" value="<?php echo $group_id; ?>">
+                                <form method="post" action="remove_user_from_project.php">
+                                    <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
                                     <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-                                    <button type="submit"  class="remove-user-btn text-red-700">Remove</button>
+                                    <button type="submit" class="remove-user-btn">Remove</button>
                                 </form>
                             </td>
                         </tr>
@@ -148,12 +129,12 @@ mysqli_close($conn);
                 </tbody>
             </table>
         <?php else : ?>
-            <p>No users associated with the group.</p>
+            <p>No users associated with the project.</p>
         <?php endif; ?>
 
-        <!-- Display list of users not associated with the group -->
-        <h2>Users Not Associated with the Group</h2>
-        <?php if ($all_users) : ?>
+        <!-- Display list of users not associated with the project -->
+        <h2>Users Not Associated with the Project</h2>
+        <?php if ($not_associated_users) : ?>
             <div class="recherche-inputs">
                 <input type="text" id="search-user" placeholder="Search User" />
             </div>
@@ -167,7 +148,7 @@ mysqli_close($conn);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($all_users as $user) : ?>
+                    <?php foreach ($not_associated_users as $user) : ?>
                         <tr>
                             <td><?php echo $user['id']; ?></td>
                             <td><?php echo $user['first_name']; ?></td>
@@ -178,45 +159,10 @@ mysqli_close($conn);
                 </tbody>
             </table>
         <?php else : ?>
-            <p>All users are associated with the group.</p>
+            <p>All users are associated with the project.</p>
         <?php endif; ?>
 
-        <div class="group-projects">
-            <h2>Projects</h2>
-            <?php if (isset($projects) && count($projects) > 0): ?>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Project ID</th>
-                            <th>Name</th>
-                            <th>Owner</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($projects as $project): ?>
-                            <tr>
-                                <td><?php echo $project['id']; ?></td>
-                                <td><?php echo $project['name']; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <p>No projects associated with the group.</p>
-            <?php endif; ?>
-        </div>
-
-        <!-- Create/Open Conversation Button -->
-        <?php if ($conversation_exists) : ?>
-            <a href="chat.php?group_id=<?php echo $group_id; ?>" class="open-conversation-btn"><?php echo $conversation_button_text; ?></a>
-        <?php else : ?>
-            <form method="POST" action="create_conversation.php">
-                <input type="hidden" name="type" value="group">
-                <input type="hidden" name="id" value="<?php echo $group_id; ?>">
-                <input type="hidden" name="name" value="<?php echo $group['name']; ?>">
-                <button type="submit" class="create-conversation-btn"><?php echo $conversation_button_text; ?></button>
-            </form>
-        <?php endif; ?>
+        
     </div>
     <script src="TableFilter.min.js" defer></script>
     <script src="TableFilter.js" defer></script>
