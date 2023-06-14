@@ -98,7 +98,7 @@ include("fonction.php");
     <div class="">
       <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
 <!-- Début table -->
-<div class="flex flex-col mt-8 justify-items-center justify-center md:div md:mx-auto pb-4">
+<div class="flex flex-col mt-8 items-center justify-center md:div md:mx-auto pb-4">
 <h1>Liste des utilisateurs</h1> 
 
 <div class="recherche-inputs">
