@@ -3,7 +3,7 @@ body {
 }
 
 
-/*  Navigation */
+Navigation 
 #bloc-nav {
     margin-top: 30px;
     border-bottom: 1px solid #333;
@@ -86,7 +86,7 @@ body {
     text-align: left;
 }
 
-/*-- pour scroll actif --*/
+-- pour scroll actif -
 
   
   .scroll-champs {
@@ -122,11 +122,11 @@ body {
     width: 20%;
   }
   tbody tr:nth-child(odd) {
-    background-color: ghostwhite;
+    background-color: white;
   }
   
   tbody tr:nth-child(even) {
-    background-color: #e495e4;
+    background-color: whitesmoke;
   }
 tbody {
   overflow-y: scroll;
