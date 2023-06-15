@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve the promo ID and user ID from the form
     $promo_id = $_POST['promo_id'];
     $user_id = $_POST['user_id'];
-
+    
     // Delete the user from the promo_user table
     $sql_delete_promo_user = "DELETE FROM promo_user WHERE id_promo = ? AND id_user = ?";
 
