@@ -246,7 +246,7 @@ include("fonction.php");
               </form>
         </td>
         </tr>
-
+        
         <?php endforeach; ?>
 
       </tbody>

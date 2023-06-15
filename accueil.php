@@ -19,7 +19,7 @@ function getLastThreeMessages($user_id) {
             INNER JOIN user ON user.id = message.id_user 
             WHERE conversation_user.id_user = ? 
             ORDER BY message.date DESC 
-            LIMIT 3";
+            LIMIT 1";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $user_id);
     mysqli_stmt_execute($stmt);
