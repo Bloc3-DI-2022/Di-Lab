@@ -21,7 +21,7 @@
         </button>
       </div>
 
-      <div class="hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0" id="navbar-collapse">
+      <div class="hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0 h-10" id="navbar-collapse">
         <a href="accueil.php" class="p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600">Accueil</a>
         <a href="promo.php" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">Promos</a>
         <a href="group.php" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300">Groupe</a>

@@ -11,6 +11,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 // Retrieve the promo ID from the URL parameter
 $promo_id = $_GET['id'] ?? 0;
+$user_id = $_SESSION['id'];
 
 // Retrieve the promo details from the database based on the promo ID
 $sql_promo = "SELECT * FROM promo WHERE id = $promo_id";
@@ -22,7 +23,19 @@ if ($result_promo && mysqli_num_rows($result_promo) > 0) {
   // Handle the case when the promo is not found
   // For example, display an error message or redirect to an error page
 }
+// Handle form submission for admin message
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $promo_id = $_POST['promo_id'];
+  $pilot_id = $_POST['pilot_id'];
+  $message = $_POST['message'];
+  $priority = $_POST['priority'];
 
+  $sql = "INSERT INTO admin_chat (id_promo, id_pilot, message, date, priority) VALUES (?, ?, ?, NOW(), ?)";
+  $stmt = mysqli_prepare($conn, $sql);
+  mysqli_stmt_bind_param($stmt, "iisi", $promo_id, $pilot_id, $message, $priority);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+}
 // Retrieve the list of pilots from the database
 $sql_pilots = "SELECT * FROM user WHERE user_type_id = 3";
 $result_pilots = mysqli_query($conn, $sql_pilots);
@@ -84,7 +97,7 @@ include("fonction.php");
 
   
 
-    <div class="w-full md:w-1/2 py-10 px-5 md:px-10 self-center">
+    <div class="w-full md:w-1/2 py-10 px-5 md:px-10 self-center ">
                 <div class="text-center mb-10">
                     <h1 class="font-bold text-3xl text-gray-900">Edition promotion</h1>
                     <p>Choississez l'information à modifier</p>
@@ -142,18 +155,40 @@ include("fonction.php");
                     
                 </form>
                 </div>
+                <h1 class="font-bold text-3xl text-gray-900 text-center ">Message important de promotion</h1>
+                <div class="w-full px-5 flex flex-col ">
+             
+      <form method="post" class="form-chat" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+          <input type="hidden" id="promo_id" name="promo_id" value="<?php echo $promo_id?>">
+          <input type="hidden" id="pilot_id" name="pilot_id" value="<?php echo $user_id?>">
+
+          <div class="flex flex-col justify-evenly mb-4">
+              <label for="message" class="font-bold text-gray-700">Message:</label>
+              <textarea name="message" required rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+
+              <label for="priority" class="mt-4 font-bold text-gray-700">Priority:</label>
+              <select id="priority" name="priority" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+              </select>
+          </div>
+        
+          <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+      </form>
+  </div>
             </div>
            
         
 
-<div class="w-full flex flex-col items-center justify-center md:w-1/2 py-10 px-5 md:px-10">
-   <div class="tableaux flex md:div md:mx-auto w-1/2 ">
+<div class="w-full flex flex-col items-center justify-center md:w-1/2 py-10 px-5 md:px-10 space-y-10">
+   <div class="tableaux flex md:div md:mx-auto w-5/6 ">
  <div class="tableaux-sans-liste-user ">
     <div class="flex flex-col mt-8">
     <div class="py-1 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
+      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg flex flex-col items-center space-y-6">
 <!-- Début table -->
-<h1>Utilisateurs de la promo</h1>
+<h1 class="font-bold text-3xl text-gray-900">Utilisateurs de la promo</h1>
       <table class="min-w-full">
 <!-- Nom colonnes -->
       <thead>
@@ -228,11 +263,11 @@ include("fonction.php");
 </div>
 </div>
 
-  <div class="flex flex-col mt-8">
+  <div class="tableaux flex md:div md:mx-auto w-5/6">
     <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
+      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg flex flex-col items-center space-y-4">
 <!-- Début table -->
-<h1>Liste des utilisateurs</h1> 
+<h1 class="font-bold text-3xl text-gray-900">Liste des utilisateurs</h1> 
 <div class="recherche-inputs">
       <input type="text" id="search-user" placeholder="Search User" />
     </div>
