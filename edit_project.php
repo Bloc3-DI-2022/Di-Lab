@@ -65,105 +65,292 @@ $not_associated_users = array_filter($all_users, function($user) use ($users) {
 });
 
 mysqli_close($conn);
-?>
-
-<!DOCTYPE html>
-<html>
+include("fonction.php");
+?><html>
 <head>
     <title>Edit Project</title>
     <meta charset="utf-8">
     <link rel="stylesheet" media="screen" href="edit_project.css">
 </head>
 <body>
-    <div class="nav">
-        <?php include("header.php"); ?>
-    </div>
-    <div class="container">
-        <h1>Edit Project</h1>
 
-        <!-- Display project details form -->
-        <form method="POST" action="update_project.php">
-            <!-- Display input fields for project details -->
-            <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" value="<?php echo $project['name'] ?? ''; ?>" required>
-            <label for="share-with-pilot">Share with Pilot:</label>
-            <input type="checkbox" id="share-with-pilot" name="share_with_pilot" value="1" <?php echo ($project['share_with_pilot'] ?? '') ? 'checked' : ''; ?>>
-            <label for="share-with-intervenant">Share with Intervenant:</label>
-            <input type="checkbox" id="share-with-intervenant" name="share_with_intervenant" value="1" <?php echo ($project['share_with_intervenant'] ?? '') ? 'checked' : ''; ?>>
 
-            <!-- Save and Discard buttons -->
-            <div class="save-discard-buttons">
-                <button type="submit" class="save-btn">Save</button>
-                <a href="edit_project.php?id=<?php echo $project_id; ?>" class="discard-link">Discard</a>
-            </div>
-        </form>
+<div class="flex flex-col h-full md:h-full justify-between">
+<!-- Bloc Navigation -->
+<?php get_include("header.php"); ?> 
 
-        <!-- Display list of users associated with the project -->
-        <h2>Users Associated with the Project</h2>
-        <?php if ($users) : ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user) : ?>
-                        <tr>
-                            <td><?php echo $user['id']; ?></td>
-                            <td><?php echo $user['first_name']; ?></td>
-                            <td><?php echo $user['last_name']; ?></td>
-                            <td>
-                                <form method="post" action="remove_user_from_project.php">
-                                    <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
-                                    <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-                                    <button type="submit" class="remove-user-btn">Remove</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else : ?>
-            <p>No users associated with the project.</p>
-        <?php endif; ?>
+  
+  
+  
+  <div class="container md:container md:mx-auto flex h-4/5 ">
 
-        <!-- Display list of users not associated with the project -->
-        <h2>Users Not Associated with the Project</h2>
-        <?php if ($not_associated_users) : ?>
-            <div class="recherche-inputs">
-                <input type="text" id="search-user" placeholder="Search User" />
-            </div>
-            <table id="all-users-table">
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Add</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($not_associated_users as $user) : ?>
-                        <tr>
-                            <td><?php echo $user['id']; ?></td>
-                            <td><?php echo $user['first_name']; ?></td>
-                            <td><?php echo $user['last_name']; ?></td>
-                            <td><button class="add-user-btn" data-user-id="<?php echo $user['id']; ?>"><img src="arrow-icon.png" alt="Add User" /></button></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else : ?>
-            <p>All users are associated with the project.</p>
-        <?php endif; ?>
+  
+
+    <div class="w-full md:w-1/2 py-10 px-5 md:px-10 self-center ">
+    
+        <h1 class="font-bold text-3xl text-gray-900 mb-20 content-center">Edit Project</h1>
+
 
         
+        <div class="w-full md:w-2/3 py-10 px-5 md:px-10 self-center ">
+<div> 
+        <div class="text-center mb-10">
+                    <h1 class="font-bold text-3xl text-gray-900">Modifications</h1>
+                    <p>Choississez l'information à modifier</p>
+                </div>
+                <div>
+                <form action='update_project.php' method='post'>
+                <input type="hidden" name="project_id" value="<?php echo $project_id; ?>">
+                    <div class="flex -mx-3">
+                        <div class="w-1/2 px-3 mb-5">
+                            <label for="first_name" class="text-xs font-semibold px-1">Partagé avec l'intervenant</label>
+                            <div class="flex">
+                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
+                                <input type="checkbox" id="share-with-intervenant" name="share_with_intervenant" value="1" <?php echo ($project['share_with_intervenant'] ?? '') ? 'checked' : ''; ?>>  </div>
+                        </div>
+                        <div class="w-1/2 px-3 mb-5">
+                            <label for="last_name" class="text-xs font-semibold px-1">Partagé avec le pilote</label>
+                            <div class="flex">
+                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
+                                <input type="checkbox" id="share-with-pilot" name="share_with_pilot" value="1" <?php echo ($project['share_with_pilot'] ?? '') ? 'checked' : ''; ?>>       </div>
+                        </div>
+                    </div>
+                    <div class="flex -mx-3">
+                        <div class="w-full px-3 mb-5">
+                            <label for="email" class="text-xs font-semibold px-1">Nom du projet</label>
+                            <div class="flex">
+                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
+                                <input type="text" id="name" name="name" value="<?php echo $project['name'] ?? ''; ?>" required>   
+        </div>
+                        </div>
+
+                    </div>
+                   
+                    <!-- <div class="w-full px-3 mb-5">
+                            <label for="email" class="text-xs font-semibold px-1">Partagé avec l'intervenant</label>
+                            <div class="flex">
+                                <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
+                                <input type="checkbox" id="share-with-intervenant" name="share_with_intervenant" value="1" <?php echo ($project['share_with_intervenant'] ?? '') ? 'checked' : ''; ?>>
+        </div>
+                        </div> -->
+                  
+                    <div class="save-discard-buttons flex items-center">
+        <button type="submit" class="save-btn block w-1/3 max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Save</button>
+        <a href="edit_promo.php?id=<?php echo $project_id; ?>" class="discard-link block w-1/3 max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Discard</a>
+      </div>
+                </form>
+                </div>
+</div>
+            </div>
+    
+
+
+
+
+               
+            </div>
+           
+        
+
+<div class="w-full flex flex-col items-center justify-center md:w-1/2 py-10 px-5 md:px-10 space-y-10">
+
+
+<!--  -->
+ <!-- Display list of users associated with the project -->
+
+<!--  -->
+   <div class="tableaux flex h-1/2  md:div md:mx-auto w-5/6">
+ <div class="tableaux-sans-liste-user ">
+    <div class="flex flex-col mt-8">
+    <div class="py-1 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg flex flex-col items-center space-y-6">
+<!-- Début table -->
+<h1 class="font-bold text-3xl text-gray-900">Utilisateurs du projet</h1>
+<?php if ($users) : ?>
+    <div class=" overflow-x-hidden overflow-y-auto h-56">
+      <table class="min-w-full ">
+<!-- Nom colonnes -->
+      <thead>
+        <tr>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        ID utilisateur</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Prénom</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+       Nom</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+       Action</th>
+       
+        </tr>
+      </thead>
+
+<!-- lignes colonnes -->
+      <tbody class="bg-white">
+        <?php foreach ($users as $user) : ?>
+        <tr>
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+         
+
+          <div class="ml-1">
+          <div class="text-sm font-medium leading-5 text-gray-900">
+          <?php echo $user['id']; ?>
+          </div>
+          </div>
+       
+        </td>
+
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+        <div class="text-sm leading-5 text-gray-500">
+          <?php echo $user['first_name']; ?>
+        </div>
+        </td>
+
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+        <div class="text-sm leading-5 text-gray-500">
+          <?php echo $user['last_name']; ?>
+        </div>
+        </td>
+        
+
+        
+        <td
+        class="px-6 py-1 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+        <form method="post" action="remove_user_from_project.php">
+            
+                <input type="hidden" name="promo_id" value="<?php echo $project_id; ?>">
+                <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
+                <button type="submit" class="remove-user-btn">Remove</button>
+
+
+              </form>
+        </td>
+        </tr>
+
+        <?php endforeach; ?>
+
+      </tbody>
+    </table>
     </div>
+    <?php else : ?>
+            <p>No users associated with the project.</p>
+        <?php endif; ?>
+    <!-- Fin tableau -->
+    </div></div>
+  </div>
+
+    
+   
+
+    
+    
+</div>
+</div>
+
+
+
+  <div class="tableaux flex h-1/2  md:div md:mx-auto w-5/6">
+    <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg flex flex-col items-center space-y-4">
+<!-- Début table -->
+<h1 class="font-bold text-3xl text-gray-900">Liste des utilisateurs non associés</h1> 
+<?php if ($not_associated_users) : ?>
+<div class="recherche-inputs">
+      <input type="text" id="search-user" placeholder="Search User" />
+    </div>
+    <div class=" overflow-x-hidden overflow-y-auto h-56">
+      <table class="min-w-full overflow-auto" id="all-users-table">
+<!-- Nom colonnes -->
+      <thead>
+        <tr>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        ID utilisateur</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Prénom</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Nom</th>
+        <th
+        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+        Ajouter</th>
+        
+        </tr>
+      </thead>
+
+<!-- lignes colonnes -->
+      <tbody class="bg-white">
+      <?php foreach ($not_associated_users as $user) : ?>
+        <tr>
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+         
+
+          <div class="ml-4">
+          <div class="text-sm font-medium leading-5 text-gray-900">
+          <?php echo $user['id']; ?>
+          </div>
+          </div>
+        </div>
+        </td>
+
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+        <div class="text-sm leading-5 text-gray-500">
+        <?php echo $user['first_name']; ?>
+        </div>
+        </td>
+
+        <td class="px-6 py-1 whitespace-no-wrap border-b border-gray-200">
+        <span
+        class="text-sm leading-5 text-gray-500">
+        <?php echo $user['last_name']; ?></span>
+        </td>
+
+        
+        <td
+        class="px-6 py-1 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+        <button class="add-user-btn " data-user-id="<?php echo $user['id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg></button>
+        </td>
+        </tr>
+
+        <?php endforeach; ?>
+
+      </tbody>
+    </table>
+      </div>
+    <?php else : ?>
+            <p>All users are associated with the project.</p>
+        <?php endif; ?>
+    <!-- Fin tableau -->
+
+    </div>
+    
+
+  </div>
+  </div>
+
+  </div>
+      </div>
+  <!-- Ajout footer -->
+
+
+
+
+
+<!-- FIN NOUVEAU CODE -->
+
+
+
+
+<?php include("footer.php"); ?>
+</div>
+
+</div>
     <script src="TableFilter.min.js" defer></script>
     <script src="TableFilter.js" defer></script>
     <script>
@@ -213,6 +400,7 @@ mysqli_close($conn);
                 form.submit();
             });
         });
+
     </script>
 </body>
 </html>

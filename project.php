@@ -35,7 +35,7 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
 mysqli_stmt_close($stmt);
-
+include("fonction.php");
 ?>
 
 <!DOCTYPE html>
@@ -46,24 +46,67 @@ mysqli_stmt_close($stmt);
     <link rel="stylesheet" media="screen" href="group.css">
 </head>
 <body>
-    <div class="nav">
-        <?php include("header.php"); ?> 
-    </div>
-    <h1>Project List</h1>
-    <div id="project-cards"> <!-- Add this line to wrap all project cards -->
+
+
+<div class="flex flex-col h-screen justify-between">
+<!-- Bloc Navigation -->
+<?php get_include("header.php"); ?> 
+
+
+
+<div class="container-chat container md:container md:mx-auto flex flex-col  h-4/5 justify-items-center justify-center items-center">
+<h1 class="font-semibold text-3xl">Liste des projets</h1>
+    
+    
+
+    <div id="group-cards " class="flex flex-wrap flex-row h-4/5 overflow-y-auto border-2 border-gray-200 p-3 justify-items-center justify-center "> <!-- Add this line to wrap all group cards -->
     <?php foreach ($projects as $project): ?>
-        <div class="project-card"> <!-- Add this line to represent a project card -->
-            <div class="project-info">
-                <div class="project-name"><?php echo $project['name']; ?></div>
-                <div class="project-share-pilot">Share with Pilot: <?php echo $project['share_with_pilot']; ?></div>
-                <div class="project-share-intervenant">Share with Intervenant: <?php echo $project['share_with_intervenant']; ?></div>
-                <!-- Add more project information here as needed -->
-                <div class="project-actions">
-                    <a href="edit_project.php?id=<?php echo $project['id']; ?>" class="edit-project-btn">Edit</a>
-                </div>
+        <div class="group-card flex flex-col content-center justify-items-center justify-center" > <!-- Add this line to represent a group card -->
+            <div class="group-info items-center border-2 border-gray-200 p-5 m-3 flex flex-col bg-white p-10 rounded-lg shadow-md" >
+            <h1 class="text-xl font-bold"><?php echo $project['name']; ?></h1>
+            <div class="mt-4 mb-8">
+      
+      
+    </div>
+    
+    
+    <h2 class="tracking-wide">
+    Share with Pilot: <?php echo $project['share_with_pilot']; ?>
+      <br />
+      Share with Intervenant: <?php echo $project['share_with_intervenant']; ?></br>
+      
+
+    </h2>
+    <button class="w-full bg-orange-400 py-3 px-8 mt-4 rounded text-sm font-semibold hover:bg-opacity-75"><a href="edit_project.php?id=<?php echo $project['id']; ?>" class="edit-project-btn">Edit</a></button>
+  </div>
+
+
+
+
+
+
+               
             </div>
-        </div> <!-- Close project card div -->
+         <!-- Close group card div -->
     <?php endforeach; ?>
-    </div> <!-- Close project cards div -->
+    </div>
+
+
+    </div> <!-- Close group cards div -->
+
+   
+
+   
+
+
+
+<?php include("footer.php"); ?>
+</div>
+
+
+    
 </body>
+
+
+
 </html>
