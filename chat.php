@@ -240,20 +240,31 @@ include("fonction.php");
       <!-- end chat list -->
       </div>
 
+     
+    <div id="messagesContainer">
+        <!-- Existing message elements -->
+    </div>
+    
+    <div class="flex flex-col h-5/6 overflow-y-auto">
+    <div id="messagesContainer">
+        <!-- Existing message elements -->
+    </div>
+</div>
+
 
 
       <!-- message -->
       <div class="w-full px-5 flex flex-col ">
 
       <div class="flex flex-col h-5/6 overflow-y-auto">
-          <div class="flex flex-col justify-evenly   mb-4">
+        
+          <div class="flex flex-col justify-evenly mb-4">
           <?php foreach ($messages as $message): ?>
                 <?php
                 $class = ($message['id_user'] == $_SESSION['id']) ? "sent" : "received";
                 ?>
-            <div
-              class="h-26 mb-4 mr-2 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white <?php echo $class; ?>"> 
-            >
+            <div class="h-26 mb-4 mr-2 py-3 px-4  <?php echo ($class === 'received') ? 'bg-green-400  rounded-br-3xl rounded-bl-sm place-self-start rounded-tl-3xl rounded-tr-xl ' : ' place-self-end bg-blue-400'; ?>  rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
+
             <span class="sender"><?php echo $message['first_name'] . ' ' . $message['last_name']; ?>:</span>
                     <br>
                     <?php echo $message['message']; ?>
@@ -338,6 +349,21 @@ include("fonction.php");
 
 <?php include("footer.php"); ?>
 </div>
+<script>
+    // Function to scroll to the bottom of the messages container
+    function scrollMessagesContainer() {
+        var messagesContainer = document.getElementById("messagesContainer");
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Call the scroll function when the page loads
+    window.onload = scrollMessagesContainer;
+
+    // Call the scroll function whenever new messages are added
+    var form = document.querySelector("form");
+    form.addEventListener("submit", scrollMessagesContainer);
+</script>
+
 </body>
 </html>
 
