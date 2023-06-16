@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'db_connection.php';
 // Get user id from URL
 $user_id = $_GET['id'];
@@ -99,7 +100,7 @@ include("fonction.php");
                     </div>
                     <div class="flex -mx-3">
                         <div class="w-full px-3 mb-5">
-                            <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Enregistrer les modifications</button>
+                            <button class="block w-full max-w-xs mx-auto bg-amber-300 hover:bg-amber-400 focus:bg-indigo-700 text-black rounded-lg px-3 py-3 font-semibold">Enregistrer les modifications</button>
                         </div>
                     </div>
                 </form>
@@ -109,7 +110,7 @@ include("fonction.php");
     
 
             <div class="w-full flex flex-col items-center justify-center md:w-1/2 py-10 px-5 md:px-10">
-            <button type="submit" name="logout" class="p-2 lg:px-4 md:mx-2 text-indigo-600 text-center border border-solid border-indigo-600 rounded hover:bg-indigo-600 hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1 mb-12"><a href="userlist.php">Retour à la page précedente</a></button>
+            <button type="submit" name="logout" class="p-2 lg:px-4 md:mx-2 text-black text-center border border-solid border-amber-300 bg-amber-300 rounded hover:bg-amber-400 hover:text-white transition-colors duration-300 mt-1 md:mt-0 md:ml-1 mb-12"><a href="userlist.php">Retour à la page précedente</a></button>
                          <!--  -->
         <table class="overflow-auto h-3/5 border-2 border-gray-200 place-items-center" id="all-users-table">
 <!-- Nom colonnes -->

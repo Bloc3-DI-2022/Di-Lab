@@ -77,7 +77,7 @@ include("fonction.php");
       
 
     </h2>
-    <button class="w-full bg-orange-400 py-3 px-8 mt-4 rounded text-sm font-semibold hover:bg-opacity-75"><a href="edit_project.php?id=<?php echo $project['id']; ?>" class="edit-project-btn">Edit</a></button>
+    <button class="w-full bg-amber-300 py-3 px-8 mt-4 rounded text-sm font-semibold hover:bg-opacity-75"><a href="edit_project.php?id=<?php echo $project['id']; ?>" class="edit-project-btn">Edit</a></button>
   </div>
 
 

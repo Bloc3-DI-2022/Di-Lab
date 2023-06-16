@@ -106,13 +106,13 @@ include("fonction.php");
                             <label for="first_name" class="text-xs font-semibold px-1">Partagé avec l'intervenant</label>
                             <div class="flex">
                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                                <input type="checkbox" id="share-with-intervenant" name="share_with_intervenant" value="1" <?php echo ($project['share_with_intervenant'] ?? '') ? 'checked' : ''; ?>>  </div>
+                                <input class="accent-amber-300" type="checkbox" id="share-with-intervenant" name="share_with_intervenant" value="1" <?php echo ($project['share_with_intervenant'] ?? '') ? 'checked' : ''; ?>>  </div>
                         </div>
                         <div class="w-1/2 px-3 mb-5">
                             <label for="last_name" class="text-xs font-semibold px-1">Partagé avec le pilote</label>
                             <div class="flex">
                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-account-outline text-gray-400 text-lg"></i></div>
-                                <input type="checkbox" id="share-with-pilot" name="share_with_pilot" value="1" <?php echo ($project['share_with_pilot'] ?? '') ? 'checked' : ''; ?>>       </div>
+                                <input class="accent-amber-300" type="checkbox" id="share-with-pilot" name="share_with_pilot" value="1" <?php echo ($project['share_with_pilot'] ?? '') ? 'checked' : ''; ?>>       </div>
                         </div>
                     </div>
                     <div class="flex -mx-3">
@@ -120,7 +120,7 @@ include("fonction.php");
                             <label for="email" class="text-xs font-semibold px-1">Nom du projet</label>
                             <div class="flex">
                                 <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                                <input type="text" id="name" name="name" value="<?php echo $project['name'] ?? ''; ?>" required>   
+                                <input  type="text" id="name" name="name" value="<?php echo $project['name'] ?? ''; ?>" required>   
         </div>
                         </div>
 
@@ -135,8 +135,8 @@ include("fonction.php");
                         </div> -->
                   
                     <div class="save-discard-buttons flex items-center">
-        <button type="submit" class="save-btn block w-1/3 max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Save</button>
-        <a href="edit_promo.php?id=<?php echo $project_id; ?>" class="discard-link block w-1/3 max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Discard</a>
+        <button type="submit" class="save-btn block w-1/3 max-w-xs mx-auto bg-amber-300 hover:bg-amber-400 focus:bg-indigo-700 text-black rounded-lg px-3 py-3 font-semibold">Save</button>
+        <a href="edit_promo.php?id=<?php echo $project_id; ?>" class="discard-link block w-1/3 max-w-xs mx-auto bg-amber-300 hover:bg-amber-400 focus:bg-indigo-700 text-black rounded-lg px-3 py-3 font-semibold">Discard</a>
       </div>
                 </form>
                 </div>
@@ -253,7 +253,7 @@ include("fonction.php");
 
 
   <div class="tableaux flex h-1/2  md:div md:mx-auto w-5/6">
-    <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+    <div class="py-2 -my-2  sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
       <div class="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg flex flex-col items-center space-y-4">
 <!-- Début table -->
 <h1 class="font-bold text-3xl text-gray-900">Liste des utilisateurs non associés</h1> 
@@ -261,7 +261,7 @@ include("fonction.php");
 <div class="recherche-inputs">
       <input type="text" id="search-user" placeholder="Search User" />
     </div>
-    <div class=" overflow-x-hidden overflow-y-auto h-56">
+    <div class=" overflow-x-hidden  h-56">
       <table class="min-w-full overflow-auto" id="all-users-table">
 <!-- Nom colonnes -->
       <thead>

@@ -98,7 +98,8 @@ $sql = "SELECT admin_chat.*, promo.name AS promo_name, user.first_name AS pilot_
         JOIN promo_user ON admin_chat.id_promo = promo_user.id_promo
         JOIN promo AS promo ON admin_chat.id_promo = promo.id
         JOIN user AS user ON admin_chat.id_pilot = user.id
-        WHERE promo_user.id_user = {$_SESSION['id']}";
+        WHERE promo_user.id_user = {$_SESSION['id']}
+        limit 3";
 
 
 $result = mysqli_query($conn, $sql);
@@ -129,7 +130,7 @@ if (!$result) {
             <div class="last-three-messages space-y-4">
                 <?php foreach ($lastThreeMessages as $message): ?>
                     <a href="chat.php?conversation_id=<?php echo $message['conversation_id']; ?>" class="block bg-white shadow p-4 rounded-md text-black no-underline hover:bg-blue-100">
-                        <h3 class="conversation-name text-blue-500 font-semibold mb-2"><?php echo $message['conversation_name']; ?></h3>
+                        <h3 class="conversation-name text-amber-300 font-semibold mb-4  "><?php echo $message['conversation_name']; ?></h3>
                         <p class="message-text text-gray-700 mb-1"><?php echo $message['message']; ?></p>
                         <p class="sender text-sm text-gray-500 mb-1"><?php echo $message['first_name'] . ' ' . $message['last_name']; ?></p>
                         <p class="datetime text-xs text-gray-400"><?php echo $message['date']; ?></p>
@@ -146,7 +147,7 @@ if (!$result) {
               <h1 class="font-bold text-2xl mb-4">Messages importants</h1>
               <div class="flex flex-col space-y-4">
                   <?php foreach ($admin_messages as $admin_message): ?>
-                      <div class="h-26 mb-4 py-3 px-4 bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
+                      <div class="h-26 mb-4 py-3 px-4 bg-gray-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
                           <h3 class="font-bold"><?php echo $admin_message['message']; ?></h3>
                           <p class="text-sm">Promo : <?php echo $admin_message['promo_name']; ?></p>
                           <p class="text-sm">Sended by : <?php echo $admin_message['pilot_name']; ?></p>
@@ -157,9 +158,7 @@ if (!$result) {
               </div>
           </div>
       </div>
-      <div>
-        <h1>derniers projets</h1>
-      </div>
+    
       </div>
      
     </div>

@@ -72,7 +72,7 @@ include("fonction.php");
       Number of Members: <?php echo $group['member_count']; ?><br/>
 
     </h2>
-    <button class="w-full bg-orange-400 py-3 px-8 mt-4 rounded text-sm font-semibold hover:bg-opacity-75"><a href="edit_group.php?id=<?php echo $group['id']; ?>" class="edit-group-btn">Edit</a></button>
+    <button class="w-full bg-amber-300 py-3 px-8 mt-4 rounded text-sm font-semibold hover:bg-opacity-75"><a href="edit_group.php?id=<?php echo $group['id']; ?>" class="edit-group-btn">Edit</a></button>
   </div>
 
 

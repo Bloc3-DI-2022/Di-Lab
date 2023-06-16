@@ -263,7 +263,7 @@ include("fonction.php");
                 <?php
                 $class = ($message['id_user'] == $_SESSION['id']) ? "sent" : "received";
                 ?>
-            <div class="h-26 mb-4 mr-2 py-3 px-4  <?php echo ($class === 'received') ? 'bg-green-400  rounded-br-3xl rounded-bl-sm place-self-start rounded-tl-3xl rounded-tr-xl ' : ' place-self-end bg-blue-400'; ?>  rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
+            <div class="h-26 mb-4 mr-2 py-3 px-4  <?php echo ($class === 'received') ? 'bg-gray-400  rounded-br-3xl rounded-bl-sm place-self-start rounded-tl-3xl rounded-tr-xl ' : ' place-self-end bg-amber-300'; ?>  rounded-bl-3xl rounded-tl-3xl rounded-tr-xl text-white">
 
             <span class="sender"><?php echo $message['first_name'] . ' ' . $message['last_name']; ?>:</span>
                     <br>
@@ -323,9 +323,9 @@ include("fonction.php");
       file:mr-4 file:py-2 file:px-4
       file:rounded-md file:border-0
       file:text-sm file:font-semibold
-      file:bg-blue-500 file:text-white
-      hover:file:bg-blue-600"  name="image">
-            <button type="submit" class=" w-12 hover:bg-gray-700 text-white font-bold py-2 mt-2 px-4 border border-gray-700 rounded"> <svg class="w-5 h-5 text-gray-500 origin-center transform rotate-90" xmlns="http://www.w3.org/2000/svg"
+      file:bg-amber-300 file:text-white
+      hover:file:bg-amber-400"  name="image">
+            <button type="submit" class=" w-12 hover:bg-amber-400 text-white font-bold py-2 mt-2 px-4 border border-amber-400 rounded"> <svg class="w-5 h-5 text-amber-300 origin-center transform rotate-90" xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20" fill="currentColor">
                   <path
                     d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />

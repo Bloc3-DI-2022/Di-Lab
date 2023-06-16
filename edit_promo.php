@@ -149,8 +149,8 @@ include("fonction.php");
                         </div>
                         </div>
                         <div class="save-discard-buttons flex items-center">
-        <button type="submit" class="save-btn block w-1/3 max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Save</button>
-        <a href="edit_promo.php?id=<?php echo $promo_id; ?>" class="discard-link block w-1/3 max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Discard</a>
+        <button type="submit" class="save-btn block w-1/3 max-w-xs mx-auto bg-amber-300 hover:bg-amber-400 focus:bg-amber-300 text-white rounded-lg px-3 py-3 font-semibold">Save</button>
+        <a href="edit_promo.php?id=<?php echo $promo_id; ?>" class="discard-link block w-1/3 max-w-xs mx-auto bg-amber-300 hover:bg-amber-400 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">Discard</a>
       </div>
                     
                 </form>
@@ -174,7 +174,7 @@ include("fonction.php");
               </select>
           </div>
         
-          <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+          <input type="submit" value="Submit" class="bg-amber-300 hover:bg-amber-400 text-white font-bold py-2 px-4 border border-amber-300 rounded">
       </form>
   </div>
             </div>
@@ -320,8 +320,8 @@ include("fonction.php");
 
         
         <td
-        class="px-6 py-1 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-        <button class="add-user-btn" data-user-id="<?php echo $user['id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="blue" class="w-6 h-6">
+        class="px-6 py-1 text-sm leading-5 text-amber-500 whitespace-no-wrap border-b border-gray-200">
+        <button class="add-user-btn" data-user-id="<?php echo $user['id']; ?>"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fcd34d" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg></button>
         </td>
